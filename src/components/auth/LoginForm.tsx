@@ -5,13 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
-interface LoginFormProps {
-  onSwitchToRegister: () => void;
-  onSwitchToReset: () => void;
-}
-
-const LoginForm = ({ onSwitchToRegister, onSwitchToReset }: LoginFormProps) => {
+const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -84,13 +80,12 @@ const LoginForm = ({ onSwitchToRegister, onSwitchToReset }: LoginFormProps) => {
           <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
           <span className="ml-2 text-sm text-gray-600">Remember me</span>
         </label>
-        <button
-          type="button"
-          onClick={onSwitchToReset}
+        <Link
+          to="/reset-password"
           className="text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors"
         >
           Forgot password?
-        </button>
+        </Link>
       </div>
 
       <Button
@@ -111,13 +106,12 @@ const LoginForm = ({ onSwitchToRegister, onSwitchToReset }: LoginFormProps) => {
       <div className="text-center">
         <p className="text-sm text-gray-600">
           Don't have an account?{' '}
-          <button
-            type="button"
-            onClick={onSwitchToRegister}
+          <Link
+            to="/register"
             className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
           >
             Sign up here
-          </button>
+          </Link>
         </p>
       </div>
     </form>

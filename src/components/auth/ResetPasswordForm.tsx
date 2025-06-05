@@ -5,12 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Mail, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
-interface ResetPasswordFormProps {
-  onSwitchToLogin: () => void;
-}
-
-const ResetPasswordForm = ({ onSwitchToLogin }: ResetPasswordFormProps) => {
+const ResetPasswordForm = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -50,12 +47,11 @@ const ResetPasswordForm = ({ onSwitchToLogin }: ResetPasswordFormProps) => {
         </div>
 
         <div className="space-y-4">
-          <Button
-            onClick={onSwitchToLogin}
-            className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
-          >
-            Back to Sign In
-          </Button>
+          <Link to="/login">
+            <Button className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl">
+              Back to Sign In
+            </Button>
+          </Link>
           
           <div className="text-center">
             <p className="text-sm text-gray-600">
@@ -118,14 +114,13 @@ const ResetPasswordForm = ({ onSwitchToLogin }: ResetPasswordFormProps) => {
       </Button>
 
       <div className="text-center">
-        <button
-          type="button"
-          onClick={onSwitchToLogin}
+        <Link
+          to="/login"
           className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Sign In
-        </button>
+        </Link>
       </div>
     </form>
   );

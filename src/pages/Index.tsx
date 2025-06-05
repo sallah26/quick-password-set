@@ -1,27 +1,8 @@
 
-import { useState } from 'react';
-import LoginForm from '@/components/auth/LoginForm';
-import RegisterForm from '@/components/auth/RegisterForm';
-import ResetPasswordForm from '@/components/auth/ResetPasswordForm';
-
-type AuthState = 'login' | 'register' | 'reset';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
-  const [authState, setAuthState] = useState<AuthState>('login');
-
-  const renderAuthForm = () => {
-    switch (authState) {
-      case 'login':
-        return <LoginForm onSwitchToRegister={() => setAuthState('register')} onSwitchToReset={() => setAuthState('reset')} />;
-      case 'register':
-        return <RegisterForm onSwitchToLogin={() => setAuthState('login')} />;
-      case 'reset':
-        return <ResetPasswordForm onSwitchToLogin={() => setAuthState('login')} />;
-      default:
-        return <LoginForm onSwitchToRegister={() => setAuthState('register')} onSwitchToReset={() => setAuthState('reset')} />;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -34,14 +15,34 @@ const Index = () => {
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome</h1>
             <p className="text-gray-600">
-              {authState === 'login' && 'Sign in to your account'}
-              {authState === 'register' && 'Create your new account'}
-              {authState === 'reset' && 'Reset your password'}
+              Choose an option to get started
             </p>
           </div>
           
-          <div className="animate-fade-in">
-            {renderAuthForm()}
+          <div className="space-y-4">
+            <Link to="/login">
+              <Button className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl">
+                Sign In
+              </Button>
+            </Link>
+            
+            <Link to="/register">
+              <Button variant="outline" className="w-full h-12 border-gray-200 hover:bg-gray-50 font-medium rounded-lg transition-all duration-200">
+                Create Account
+              </Button>
+            </Link>
+            
+            <Link to="/reset-password">
+              <Button variant="ghost" className="w-full h-12 text-gray-600 hover:text-gray-900 font-medium rounded-lg transition-all duration-200">
+                Reset Password
+              </Button>
+            </Link>
+            
+            <Link to="/account-setup">
+              <Button variant="ghost" className="w-full h-12 text-gray-600 hover:text-gray-900 font-medium rounded-lg transition-all duration-200">
+                Account Setup
+              </Button>
+            </Link>
           </div>
         </div>
         
