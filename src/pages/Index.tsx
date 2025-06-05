@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/contests/AuthContext";
+import Tenant from "@/components/Tenant";
 
 const Index = () => {
   const { user, profile } = useAuthContext();
@@ -26,6 +27,11 @@ const Index = () => {
               </svg>
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome</h1>
+            {profile?.tenant_id && (
+              <p>
+                you are the admin of <Tenant id={profile?.tenant_id} /> school
+              </p>
+            )}
             <p className="text-gray-600">Choose an option to get started</p>
           </div>
 

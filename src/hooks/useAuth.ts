@@ -21,6 +21,10 @@ export default function useAuth() {
   useEffect(() => {
     // Check for session from localStorage
     const storedSession = localStorage.getItem("supabase.auth.token");
+    // const storedSession = localStorage.getItem(
+    //   "sb-jphrhtxjuoreiyhqwbog-auth-token"
+    // );
+
     if (storedSession) {
       try {
         const parsedSession = JSON.parse(storedSession);
