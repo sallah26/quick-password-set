@@ -19,17 +19,44 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/account-setup" element={<AccountSetup />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthProvider>
+        <Routes>
+          <Route path="/account-setup" element={<AccountSetup />} />
+
+          <Route
+            path="/"
+            element={
+              <AuthProvider>
+                <Index />
+              </AuthProvider>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <AuthProvider>
+                <Login />
+              </AuthProvider>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <AuthProvider>
+                <Register />
+              </AuthProvider>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <AuthProvider>
+                <ResetPassword />
+              </AuthProvider>
+            }
+          />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

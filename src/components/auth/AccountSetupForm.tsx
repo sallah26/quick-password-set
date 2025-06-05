@@ -31,22 +31,13 @@ export const AccountSetupForm = () => {
           refresh_token: "", // Refresh token not needed for password setup
         });
         if (error) {
-          toast({
-            title: "Error",
-            description: "Invalid or expired invitation link.",
-            variant: "destructive",
-          });
           return;
         }
         if (session?.user) {
           setEmail(session.user.email);
         }
       } else {
-        toast({
-          title: "Error",
-          description: "No invitation token found in the URL.",
-          variant: "destructive",
-        });
+        return;
       }
     };
     setSessionFromToken();
