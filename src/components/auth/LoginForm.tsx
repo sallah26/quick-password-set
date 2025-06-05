@@ -1,31 +1,40 @@
-
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/supabase/client";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-
+  const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    setIsLoading(false);
+    if (error) {
       toast({
-        title: "Login Successful!",
-        description: "Welcome back to your account.",
+        variant: "destructive",
+        title: "Login",
+        description: error.message,
       });
-    }, 1500);
+    } else {
+      toast({
+        title: "Login",
+        description: `login successfuly ${data.user.email}`,
+      });
+      navigate("/");
+    }
   };
 
   return (
@@ -50,14 +59,17 @@ const LoginForm = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+          <Label
+            htmlFor="password"
+            className="text-sm font-medium text-gray-700"
+          >
             Password
           </Label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <Input
               id="password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -69,7 +81,11 @@ const LoginForm = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
             >
-              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              {showPassword ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>
@@ -77,7 +93,10 @@ const LoginForm = () => {
 
       <div className="flex items-center justify-between">
         <label className="flex items-center">
-          <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+          <input
+            type="checkbox"
+            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+          />
           <span className="ml-2 text-sm text-gray-600">Remember me</span>
         </label>
         <Link
@@ -99,13 +118,13 @@ const LoginForm = () => {
             Signing in...
           </div>
         ) : (
-          'Sign In'
+          "Sign In"
         )}
       </Button>
 
       <div className="text-center">
         <p className="text-sm text-gray-600">
-          Don't have an account?{' '}
+          Don't have an account?{" "}
           <Link
             to="/register"
             className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
