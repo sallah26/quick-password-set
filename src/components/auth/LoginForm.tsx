@@ -6,6 +6,7 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/supabase/client";
+import { useAuthContext } from "@/contests/AuthContext";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -14,29 +15,41 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { user, signIn, loading } = useAuthContext();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    signIn(email, password);
     setIsLoading(false);
-    if (error) {
-      toast({
-        variant: "destructive",
-        title: "Login",
-        description: error.message,
-      });
-    } else {
-      toast({
-        title: "Login",
-        description: `login successfuly ${data.user.email}`,
-      });
-      navigate("/");
-    }
-  };
+    navigate("/");
+    // const { data, error } = await supabase.auth.signInWithPassword({
+    //   email,
+    //   password,
+    // });
 
+    // if (error) {
+    //   toast({
+    //     variant: "destructive",
+    //     title: "Login",
+    //     description: error.message,
+    //   });
+    //   setIsLoading(false);
+    // } else {
+    //   toast({
+    //     title: "Login",
+    //     description: `login successfuly ${data.user.email}`,
+    //   });
+    // const { data: profile, error: profileError } = await supabase
+    //   .from("profiles")
+    //   .select("*")
+    //   .eq("id", data.user.id)
+    //   .single();
+
+    //   setIsLoading(false);
+    //   navigate("/");
+    // }
+  };
+  // if (user) navigate("/");
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
