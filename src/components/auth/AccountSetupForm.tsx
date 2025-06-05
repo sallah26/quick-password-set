@@ -21,23 +21,26 @@ export const AccountSetupForm = () => {
     // Extract token from URL and set session
     const setSessionFromToken = async () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const accessToken = urlParams.get("access_token");
+      const accessToken = urlParams.get("token");
       if (accessToken) {
         const {
           data: { session },
           error,
         } = await supabase.auth.setSession({
           access_token: accessToken,
-          refresh_token: "", // Refresh token not needed for password setup
+          refresh_token: "",
         });
         if (error) {
+          toast({
+            title: "Error",
+            description: "Invalid or expired invitation link.",
+            variant: "destructive",
+          });
           return;
         }
         if (session?.user) {
           setEmail(session.user.email);
         }
-      } else {
-        return;
       }
     };
     setSessionFromToken();
