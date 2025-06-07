@@ -5,7 +5,9 @@ import Tenant from "@/components/Tenant";
 
 const Index = () => {
   const { user, profile } = useAuthContext();
-
+  console.log("====================================");
+  console.log(profile);
+  console.log("====================================");
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">

@@ -19,7 +19,7 @@ const LoginForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    signIn(email, password);
+    await signIn(email, password);
     setIsLoading(false);
     navigate("/");
     // const { data, error } = await supabase.auth.signInWithPassword({
